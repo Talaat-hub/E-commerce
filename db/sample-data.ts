@@ -1,6 +1,4 @@
-import { ProductsData } from "@/components/products/Products.types";
-
-const sampleData: ProductsData = {
+const sampleData = {
   products: [
     {
       name: "Polo Sporting Stretch Shirt",
