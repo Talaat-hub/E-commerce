@@ -8,8 +8,8 @@ const sampleData: ProductsData = {
       category: "Men's Dress Shirts",
       description: "Classic Polo style with modern comfort",
       images: [
-        "/images/sample-products/p2-1.jpg",
-        "/images/sample-products/p2-2.jpg",
+        "/images/sample-products/p1-1.jpg",
+        "/images/sample-products/p1-2.jpg",
       ],
       price: 59.99,
       brand: "Polo",
@@ -25,8 +25,8 @@ const sampleData: ProductsData = {
       category: "Men's Dress Shirts",
       description: "Timeless style and premium comfort",
       images: [
-        "/images/sample-products/p1-1.jpg",
-        "/images/sample-products/p1-2.jpg",
+        "/images/sample-products/p2-1.jpg",
+        "/images/sample-products/p2-2.jpg",
       ],
       price: 85.9,
       brand: "Brooks Brothers",
