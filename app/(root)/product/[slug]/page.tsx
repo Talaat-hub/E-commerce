@@ -6,9 +6,13 @@ import ProductPrice from "@/components/products/ProductPrice/ProductPrice";
 import { Button } from "@/components/ui/button";
 import ProductImages from "@/components/products/ProductImages/ProductImages";
 
-const ProductDetailsPage = async (props: {
-  params: Promise<{ slug: string }>;
-}) => {
+type ProductDetailsPageProps = {
+  params: Promise<{
+    slug: string;
+  }>;
+};
+
+const ProductDetailsPage = async (props: ProductDetailsPageProps) => {
   const { slug } = await props.params;
 
   const product = await getProductBySlug(slug);
