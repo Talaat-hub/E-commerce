@@ -7,7 +7,12 @@ import { useTheme } from "next-themes";
 import { useMounted } from "@/hooks/useMounted";
 import { APP_NAME } from "@/lib/constants";
 
-const Logo = () => {
+type LogoProps = {
+  width: number;
+  height: number;
+};
+
+const Logo = ({ width, height }: LogoProps) => {
   const { resolvedTheme } = useTheme();
   const mounted = useMounted();
 
@@ -17,8 +22,8 @@ const Logo = () => {
     <Image
       src={resolvedTheme === "dark" ? Light : Dark}
       alt={`${APP_NAME} logo`}
-      width={60}
-      height={50}
+      width={width}
+      height={height}
       priority
     />
   );
