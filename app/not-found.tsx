@@ -7,7 +7,7 @@ import Logo from "@/components/layout/Header/Logo";
 const NotFoundPage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <Logo />
+      <Logo width={100} height={100} />
       <div className="p-6 md:w-1/3 rounded-lg shadow-md text-center">
         <h1 className="text-3xl font-bold mb-4">Not Found</h1>
         <p className="text-destructive">Could not find requested page</p>
