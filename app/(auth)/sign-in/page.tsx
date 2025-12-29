@@ -24,7 +24,7 @@ type SignInPageProps = {
 
 const SignInPage = async (props: SignInPageProps) => {
   const { callbackUrl } = await props.searchParams;
-
+    
   const session = await auth();
 
   if (session) {
