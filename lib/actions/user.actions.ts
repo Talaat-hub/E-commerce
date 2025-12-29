@@ -7,6 +7,7 @@ import { SignInFormState, SignUpFormState } from "@/types/auth";
 import { hashSync } from "bcrypt-ts-edge";
 import prisma from "../prisma";
 import { formatError } from "../utils";
+import { ZodError } from "zod";
 
 // Sign in the user with credentials
 export async function signInWithCredentials(
@@ -67,9 +68,18 @@ export async function signUpUser(
 
     return { success: true, message: "User registered successfully" };
   } catch (error) {
-    if (isRedirectError(error)) {
-      throw error;
+    if (isRedirectError(error)) throw error;
+
+    if (error instanceof ZodError) {
+      return {
+        success: false,
+        fieldErrors: error.flatten().fieldErrors,
+      };
     }
-    return { success: false, message: formatError(error) };
+
+    return {
+      success: false,
+      message: formatError(error),
+    };
   }
 }
