@@ -53,7 +53,6 @@ const SignUpForm = () => {
             id="password"
             name="password"
             type="password"
-            required
             autoComplete="password"
             defaultValue={signUpDefaultValues.password}
           />
@@ -64,7 +63,6 @@ const SignUpForm = () => {
             id="confirmPassword"
             name="confirmPassword"
             type="password"
-            required
             autoComplete="confirmPassword"
             defaultValue={signUpDefaultValues.confirnPassword}
           />
