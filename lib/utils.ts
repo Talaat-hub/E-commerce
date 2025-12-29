@@ -1,5 +1,7 @@
+import { Prisma } from "@/app/generated/prisma/client";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { ZodError } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -16,9 +18,6 @@ export function formatNumberWithDecimal(num: number): string {
   const [int, decimal] = num.toString().split(".");
   return decimal ? `${int}.${decimal.padEnd(2, "0")}` : `${int}.00`;
 }
-
-import { ZodError } from "zod";
-import { Prisma } from "@prisma/client";
 
 //Format Errors
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
