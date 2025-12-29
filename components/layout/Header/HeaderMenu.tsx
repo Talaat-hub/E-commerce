@@ -16,9 +16,9 @@ const HeaderMenu = () => {
     <div className="flex justify-end gap-3">
       <nav className="hidden md:flex w-full max-w-xs gap-1">
         <ThemeToggler />
-        <Button asChild variant="ghost">
+        <Button asChild variant="ghost" className="rounded-full">
           <Link href="/cart">
-            <ShoppingCart /> Cart
+            <ShoppingCart />
           </Link>
         </Button>
         <UserButton />
