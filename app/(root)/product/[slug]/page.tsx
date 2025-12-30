@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import ProductPrice from "@/components/products/ProductPrice/ProductPrice";
 import ProductImages from "@/components/products/ProductImages/ProductImages";
 import AddToCart from "@/components/products/Cart/AddToCart";
+import { getMyCart } from "@/lib/actions/cart.actions";
 
 type ProductDetailsPageProps = {
   params: Promise<{
@@ -17,6 +18,8 @@ const ProductDetailsPage = async (props: ProductDetailsPageProps) => {
 
   const product = await getProductBySlug(slug);
   if (!product) notFound();
+
+  const cart = await getMyCart();
 
   const item = {
     productId: product.id,
@@ -82,7 +85,7 @@ const ProductDetailsPage = async (props: ProductDetailsPageProps) => {
                 </div>
                 {product.stock > 0 && (
                   <div className="flex-center">
-                    <AddToCart item={item} />
+                    <AddToCart cart={cart} item={item} />
                   </div>
                 )}
               </CardContent>
