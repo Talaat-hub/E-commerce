@@ -3,8 +3,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getProductBySlug } from "@/lib/actions/product.actions";
 import { notFound } from "next/navigation";
 import ProductPrice from "@/components/products/ProductPrice/ProductPrice";
-import { Button } from "@/components/ui/button";
 import ProductImages from "@/components/products/ProductImages/ProductImages";
+import AddToCart from "@/components/products/Cart/AddToCart";
 
 type ProductDetailsPageProps = {
   params: Promise<{
@@ -17,6 +17,15 @@ const ProductDetailsPage = async (props: ProductDetailsPageProps) => {
 
   const product = await getProductBySlug(slug);
   if (!product) notFound();
+
+  const item = {
+    productId: product.id,
+    name: product.name,
+    slug: product.slug,
+    price: Number(product.price),
+    qty: 1,
+    image: product.images![0],
+  };
 
   return (
     <>
@@ -73,7 +82,7 @@ const ProductDetailsPage = async (props: ProductDetailsPageProps) => {
                 </div>
                 {product.stock > 0 && (
                   <div className="flex-center">
-                    <Button>Add to cart</Button>
+                    <AddToCart item={item} />
                   </div>
                 )}
               </CardContent>
