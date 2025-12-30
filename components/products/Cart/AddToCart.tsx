@@ -18,7 +18,7 @@ const AddToCart = ({ item }: AddToCartProps) => {
       return;
     }
 
-    toast.success(`${item.name.slice(0, 15)} added to cart`, {
+    toast.success(`${item.name.slice(0, 15)}... added to cart`, {
       action: {
         label: "Go To Cart",
         onClick: () => router.push("/cart"),
