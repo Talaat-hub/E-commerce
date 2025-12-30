@@ -2,7 +2,7 @@ import { z } from "zod";
 import { formatNumberWithDecimal } from "../utils";
 
 // Ensures that price has the correct format
-const currency = z
+export const currency = z
   .number()
   .refine(
     (value) => /^\d+(\.\d{2})?$/.test(formatNumberWithDecimal(Number(value))),
