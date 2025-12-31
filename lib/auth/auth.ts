@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { compareSync } from "bcrypt-ts-edge";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "../prisma";
+import { cookies } from "next/headers";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -55,6 +56,38 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
+    /* =========================
+       ROUTE PROTECTION
+       ========================= */
+
+    async authorized({ auth, request }) {
+      const { pathname } = request.nextUrl;
+
+      const protectedPaths = [
+        "/shipping-address",
+        "/payment-method",
+        "/place-order",
+        "/profile",
+        "/admin",
+        "/user",
+        "/order",
+      ];
+
+      const isProtected = protectedPaths.some((path) =>
+        pathname.startsWith(path)
+      );
+
+      // 🚨 NOT LOGGED IN → REDIRECT TO SIGN IN
+      if (isProtected && !auth?.user) {
+        return false;
+      }
+
+      return true;
+    },
+    /* =========================
+       SESSION
+       ========================= */
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async session({ session, user, trigger, token }: any) {
       // Set the user ID from the token
@@ -69,8 +102,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       return session;
     },
+
+    /* =========================
+       JWT + CART MERGE
+       ========================= */
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async jwt({ token, user }: any) {
+    async jwt({ token, user, trigger }: any) {
       // Assign user fields to token
       if (user) {
         token.id = user.id;
@@ -85,6 +123,29 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             where: { id: user.id },
             data: { name: token.name },
           });
+        }
+
+        if (trigger === "signIn" || trigger === "signUp") {
+          const cookiesObject = await cookies();
+          const sessionCartId = cookiesObject.get("sessionCartId")?.value;
+
+          if (sessionCartId) {
+            const sessionCart = await prisma.cart.findFirst({
+              where: { sessionCartId },
+            });
+
+            if (sessionCart) {
+              // Delete current user cart
+              await prisma.cart.deleteMany({
+                where: { userId: user.id },
+              });
+              // Assign new cart
+              await prisma.cart.update({
+                where: { id: sessionCart.id },
+                data: { userId: user.id },
+              });
+            }
+          }
         }
       }
       return token;
