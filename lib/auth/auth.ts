@@ -59,30 +59,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     /* =========================
        ROUTE PROTECTION
        ========================= */
-
-    async authorized({ auth, request }) {
-      const { pathname } = request.nextUrl;
-
+    authorized({ request, auth }) {
+      // Array of regex patterns of paths we want to protect
       const protectedPaths = [
-        "/shipping-address",
-        "/payment-method",
-        "/place-order",
-        "/profile",
-        "/admin",
-        "/user",
-        "/order",
+        /\/shipping-address/,
+        /\/payment-method/,
+        /\/place-order/,
+        /\/profile/,
+        /\/user\/(.*)/,
+        /\/order\/(.*)/,
+        /\/admin/,
       ];
 
-      const isProtected = protectedPaths.some((path) =>
-        pathname.startsWith(path)
-      );
-
-      // 🚨 NOT LOGGED IN → REDIRECT TO SIGN IN
-      if (isProtected && !auth?.user) {
-        return false;
-      }
-
-      return true;
+      // Get pathname from the req URL object
+      const { pathname } = request.nextUrl;
+      // Check if user is not authenticated and accessing a protected path
+      if (!auth && protectedPaths.some((p) => p.test(pathname))) return false;
     },
     /* =========================
        SESSION
