@@ -100,7 +100,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
        ========================= */
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async jwt({ token, user, trigger }: any) {
+    async jwt({ token, user, trigger, session }: any) {
       // Assign user fields to token
       if (user) {
         token.id = user.id;
@@ -139,6 +139,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             }
           }
         }
+      }
+
+      // Handle session updates
+      if (session?.user.name && trigger === "update") {
+        token.name = session.user.name;
       }
       return token;
     },
