@@ -34,6 +34,7 @@ const OrderDetailsPage = async (props: OrderDetailsPageProps) => {
         shippingAddress: order.shippingAddress as ShippingAddress,
       }}
       paypalClientId={process.env.PAYPAL_CLIENT_ID || "sb"}
+      isAdmin={session?.user?.role === "admin" || false}
     />
   );
 };
