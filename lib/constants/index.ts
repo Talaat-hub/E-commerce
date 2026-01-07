@@ -36,12 +36,20 @@ export const productDefaultValues = {
   images: [],
   brand: "",
   description: "",
-  price: "0",
+  price: 0,
   stock: 0,
   rating: "0",
   numReviews: "0",
   isFeatured: false,
   banner: null,
+  // name: "",
+  // slug: "",
+  // category: "",
+  // images: [],
+  // brand: "",
+  // description: "",
+  // price: 0,
+  // stock: 0,
+  // isFeatured: false,
+  // banner: null,
 };
-
-
