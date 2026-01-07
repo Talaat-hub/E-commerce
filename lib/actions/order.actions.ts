@@ -437,7 +437,7 @@ export async function updateOrderToPaidCOD(orderId: string) {
 
     revalidatePath(`/order/${orderId}`);
 
-    return { success: true, message: 'Order marked as paid' };
+    return { success: true, message: "Order marked as paid" };
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
@@ -452,8 +452,8 @@ export async function deliverOrder(orderId: string) {
       },
     });
 
-    if (!order) throw new Error('Order not found');
-    if (!order.isPaid) throw new Error('Order is not paid');
+    if (!order) throw new Error("Order not found");
+    if (!order.isPaid) throw new Error("Order is not paid");
 
     await prisma.order.update({
       where: { id: orderId },
@@ -467,7 +467,7 @@ export async function deliverOrder(orderId: string) {
 
     return {
       success: true,
-      message: 'Order has been marked delivered',
+      message: "Order has been marked delivered",
     };
   } catch (error) {
     return { success: false, message: formatError(error) };
