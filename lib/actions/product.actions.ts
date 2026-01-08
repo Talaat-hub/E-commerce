@@ -5,7 +5,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { LATEST_PRODUCTS_LIMIT, PAGE_SIZE } from "../constants";
 import { GetAllProducts } from "@/types/product";
 import { revalidatePath } from "next/cache";
-import { formatError } from "../utils";
+import { convertToPlainObject, formatError } from "../utils";
 import {
   insertProductSchema,
   updateProductSchema,
@@ -37,6 +37,24 @@ export async function getProductBySlug(slug: string) {
   return await prisma.product.findFirst({
     where: { slug: slug },
   });
+}
+
+// Get single product by it's ID
+export async function getProductById(productId: string) {
+  const data = await prisma.product.findFirst({
+    where: { id: productId },
+  });
+
+  if (!data) return null;
+
+  const plain = convertToPlainObject(data);
+
+  return {
+    ...plain,
+    price: Number(plain.price),
+    rating: Number(plain.rating ?? 0),
+    createdAt: new Date(plain.createdAt),
+  };
 }
 
 // Get all products
