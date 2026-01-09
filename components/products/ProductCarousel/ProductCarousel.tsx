@@ -22,7 +22,7 @@ const ProductCarousel = ({ data }: { data: Product[] }) => {
       }}
       plugins={[
         Autoplay({
-          delay: 2000,
+          delay: 10000,
           stopOnInteraction: true,
           stopOnMouseEnter: true,
         }),
@@ -30,7 +30,6 @@ const ProductCarousel = ({ data }: { data: Product[] }) => {
     >
       <CarouselContent>
         {data.map((product: Product) => {
-          console.log(product);
           return (
             <React.Fragment key={product.id}>
               {product.banner && (
