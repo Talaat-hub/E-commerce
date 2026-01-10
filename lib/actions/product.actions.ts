@@ -123,8 +123,15 @@ export async function getAllProducts({
 
   const dataCount = await prisma.product.count();
 
+  // Convert Decimal fields to number
+  const plainData = data.map((product) => ({
+    ...product,
+    price: Number(product.price), // <- convert Decimal to number
+    rating: Number(product.rating), // <- convert Decimal to number
+  }));
+
   return {
-    data,
+    data: plainData,
     totalPages: Math.ceil(dataCount / limit),
   };
 }
