@@ -11,11 +11,11 @@ import z, { ZodError } from "zod";
 import { shippingAddressSchema } from "../validators/shipping-adress";
 import { ShippingAddress } from "@/types/shipping-adress";
 import { paymentMethodSchema } from "../validators/payment";
-import { toast } from "sonner";
 import { PAGE_SIZE } from "../constants";
 import { Prisma } from "@/app/generated/prisma/client";
 import { revalidatePath } from "next/cache";
 import { updateUserSchema } from "../validators/user";
+import { getMyCart } from "./cart.actions";
 
 // Sign in the user with credentials
 export async function signInWithCredentials(
@@ -41,8 +41,9 @@ export async function signInWithCredentials(
 
 // Sign user out
 export async function signOutUser() {
+  const currentCart = await getMyCart();
+  await prisma.cart.delete({ where: { id: currentCart?.id } });
   await signOut();
-  toast.success("logged out succussfully");
 }
 
 // Sign up user
@@ -244,7 +245,6 @@ export async function deleteUser(id: string) {
   }
 }
 
-
 // Update a user
 export async function updateUser(user: z.infer<typeof updateUserSchema>) {
   try {
@@ -256,11 +256,11 @@ export async function updateUser(user: z.infer<typeof updateUserSchema>) {
       },
     });
 
-    revalidatePath('/admin/users');
+    revalidatePath("/admin/users");
 
     return {
       success: true,
-      message: 'User updated successfully',
+      message: "User updated successfully",
     };
   } catch (error) {
     return { success: false, message: formatError(error) };
