@@ -19,10 +19,14 @@ import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 const CartTable = ({ cart }: { cart?: Cart }) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const screenWidth = useWindowSize();
+
+  if (!screenWidth) return null;
 
   return (
     <>
@@ -60,7 +64,11 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                           width={50}
                           height={50}
                         />
-                        <span className="px-2">{item.name}</span>
+                        <span className="px-2">
+                          {screenWidth && screenWidth < 550
+                            ? `${item.name.slice(0, 18)}...`
+                            : item.name}
+                        </span>
                       </Link>
                     </TableCell>
                     <TableCell className="flex-center gap-2 mt-3">
@@ -75,8 +83,8 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
             </Table>
           </div>
           <Card className="mt-5 lg:mt-0">
-            <CardContent className="px-4 py-2">
-              <div className="pb-3 text-xl">
+            <CardContent className="px-4 py-2 flex flex-col flex-1 justify-between">
+              <div className="pb-3 text-xl text-center">
                 Subtotal ({cart.items.reduce((a, c) => a + c.qty, 0)}):
                 <span className="font-bold">
                   {" "}
