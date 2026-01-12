@@ -1,5 +1,6 @@
 import ProductCarousel from "@/components/products/ProductCarousel/ProductCarousel";
 import ProductList from "@/components/products/ProductList/ProductList";
+import DealCountdown from "@/components/shared/deal-countdown/DealCountdown";
 import IconBoxes from "@/components/shared/icon-boxes/icon-boxes";
 import ViewAllProductsButton from "@/components/shared/view-all/ViewAllProudctsButton";
 import {
@@ -19,6 +20,7 @@ export default async function Home() {
       <ProductList data={latestProducts} title="Newest Arrivals" />
       <ViewAllProductsButton />
       <IconBoxes />
+      <DealCountdown />
     </>
   );
 }
