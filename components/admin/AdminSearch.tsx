@@ -10,13 +10,13 @@ const AdminSearch = () => {
   const formActionUrl = pathname.includes("/admin/orders")
     ? "/admin/orders"
     : pathname.includes("/admin/users")
-    ? "/admin/users"
-    : "/admin/products";
+      ? "/admin/users"
+      : "/admin/products";
 
   const queryValue = searchParams.get("query") || "";
 
   return (
-    <form action={formActionUrl} method="GET">
+    <form action={formActionUrl} method="GET" className="hidden md:block">
       <Input
         type="search"
         placeholder="Search..."
