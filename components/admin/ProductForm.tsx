@@ -293,7 +293,7 @@ const ProductForm = ({ type, product, productId }: ProductFormProps) => {
               />
               {isFeatured && banner && (
                 <Image
-                  src={banner}
+                  src={`/images/${banner}`}
                   alt="banner image"
                   className="w-full object-cover object-center rounded-sm"
                   width={1920}
