@@ -53,7 +53,7 @@ const PaymentMethodForm = ({
 
   return (
     <>
-      <div className="max-w-md mx-auto space-y-4">
+      <div className="max-w-md mx-auto space-y-4 text-center md:text-left">
         <h1 className="h2-bold mt-4">Payment Method</h1>
         <p className="text-sm text-muted-foreground">
           Please select a payment method
@@ -61,7 +61,7 @@ const PaymentMethodForm = ({
         <Form {...form}>
           <form
             method="post"
-            className="space-y-4"
+            className="space-y-4 flex flex-col items-center md:block"
             onSubmit={form.handleSubmit(onSubmit)}
           >
             <div className="flex flex-col md:flex-row gap-5">
