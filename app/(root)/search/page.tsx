@@ -18,11 +18,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const prices = [
-  { name: "$1 to $50", value: "1-50" },
-  { name: "$51 to $100", value: "51-100" },
-  { name: "$101 to $200", value: "101-200" },
-  { name: "$201 to $500", value: "201-500" },
-  { name: "$501 to $1000", value: "501-1000" },
+  { name: "$25 to $50", value: "25-50" },
+  { name: "$51 to $75", value: "51-75" },
+  { name: "$76 to $100", value: "76-100" },
+  { name: "$101 to $125", value: "125-150" },
+  { name: "$151 to $200", value: "151-200" },
 ];
 
 const ratings = [4, 3, 2, 1];
