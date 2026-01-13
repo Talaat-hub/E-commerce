@@ -7,7 +7,7 @@ import Search from "./Search";
 
 const Header = () => {
   return (
-    <header className="w-full border-b">
+    <header className="w-full border-b bg-card">
       <div className="wrapper flex-between">
         <div className="flex-start">
           <CategoryDrawer />
