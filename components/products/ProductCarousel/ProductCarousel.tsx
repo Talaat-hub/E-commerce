@@ -35,14 +35,13 @@ const ProductCarousel = ({ data }: { data: Product[] }) => {
               {product.banner && (
                 <CarouselItem className="w-[90%]">
                   <Link href={`/product/${product.slug}`}>
-                    <div className="relative mx-auto">
+                    <div className="relative mx-auto ">
                       <Image
                         src={product.banner}
                         alt={product.name}
-                        height="0"
-                        width="0"
-                        sizes="100vw"
-                        className="w-full h-auto"
+                        width={1920}
+                        height={680}
+                        className="w-full h-35 md:h-70"
                       />
 
                       <div className="absolute inset-0 flex items-end justify-center">
