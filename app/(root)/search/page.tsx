@@ -1,73 +1,32 @@
 import ProductCard from "@/components/products/ProductCard/ProductCard";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
 import {
   getAllProducts,
   getAllCategories,
 } from "@/lib/actions/product.actions";
 import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
+import Rating from "@/components/products/Rating/Rating";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const prices = [
-  {
-    name: "$1 to $50",
-    value: "1-50",
-  },
-  {
-    name: "$51 to $100",
-    value: "51-100",
-  },
-  {
-    name: "$101 to $200",
-    value: "101-200",
-  },
-  {
-    name: "$201 to $500",
-    value: "201-500",
-  },
-  {
-    name: "$501 to $1000",
-    value: "501-1000",
-  },
+  { name: "$1 to $50", value: "1-50" },
+  { name: "$51 to $100", value: "51-100" },
+  { name: "$101 to $200", value: "101-200" },
+  { name: "$201 to $500", value: "201-500" },
+  { name: "$501 to $1000", value: "501-1000" },
 ];
 
 const ratings = [4, 3, 2, 1];
-
 const sortOrders = ["newest", "lowest", "highest", "rating"];
-
-export async function generateMetadata(props: {
-  searchParams: Promise<{
-    q: string;
-    category: string;
-    price: string;
-    rating: string;
-  }>;
-}) {
-  const {
-    q = "all",
-    category = "all",
-    price = "all",
-    rating = "all",
-  } = await props.searchParams;
-
-  const isQuerySet = q && q !== "all" && q.trim() !== "";
-  const isCategorySet =
-    category && category !== "all" && category.trim() !== "";
-  const isPriceSet = price && price !== "all" && price.trim() !== "";
-  const isRatingSet = rating && rating !== "all" && rating.trim() !== "";
-
-  if (isQuerySet || isCategorySet || isPriceSet || isRatingSet) {
-    return {
-      title: `
-      Search ${isQuerySet ? q : ""} 
-      ${isCategorySet ? `: Category ${category}` : ""}
-      ${isPriceSet ? `: Price ${price}` : ""}
-      ${isRatingSet ? `: Rating ${rating}` : ""}`,
-    };
-  } else {
-    return {
-      title: "Search Products",
-    };
-  }
-}
 
 const SearchPage = async (props: {
   searchParams: Promise<{
@@ -88,26 +47,25 @@ const SearchPage = async (props: {
     page = "1",
   } = await props.searchParams;
 
-  // Construct filter url
   const getFilterUrl = ({
     c,
     p,
-    s,
     r,
+    s,
     pg,
   }: {
     c?: string;
     p?: string;
-    s?: string;
     r?: string;
+    s?: string;
     pg?: string;
   }) => {
     const params = { q, category, price, rating, sort, page };
 
     if (c) params.category = c;
     if (p) params.price = p;
-    if (s) params.sort = s;
     if (r) params.rating = r;
+    if (s) params.sort = s;
     if (pg) params.page = pg;
 
     return `/search?${new URLSearchParams(params).toString()}`;
@@ -116,8 +74,8 @@ const SearchPage = async (props: {
   const products = await getAllProducts({
     query: q,
     category,
-    price: String(price),
-    rating: String(rating),
+    price,
+    rating,
     sort,
     page: Number(page),
   });
@@ -125,115 +83,152 @@ const SearchPage = async (props: {
   const categories = await getAllCategories();
 
   return (
-    <div className="grid md:grid-cols-5 md:gap-5">
-      <div className="filter-links w-fit mx-auto md:mx-0">
-        {/* Category Links */}
-        <div className="text-xl mb-2 mt-3">Department</div>
-        <div>
-          <ul className="space-y-1">
-            <li>
-              <Link
-                className={`${
-                  (category === "all" || category === "") && "font-bold"
-                }`}
-                href={getFilterUrl({ c: "all" })}
-              >
-                Any
-              </Link>
-            </li>
-            {categories.map((x) => (
-              <li key={x.category}>
-                <Link
-                  className={`${category === x.category && "font-bold"}`}
-                  href={getFilterUrl({ c: x.category })}
-                >
-                  {x.category}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        {/* Price Links */}
-        <div className="text-xl mb-2 mt-8">Price</div>
-        <div>
-          <ul className="space-y-1">
-            <li>
-              <Link
-                className={`${price === "all" && "font-bold"}`}
-                href={getFilterUrl({ p: "all" })}
-              >
-                Any
-              </Link>
-            </li>
-            {prices.map((p) => (
-              <li key={p.value}>
-                <Link
-                  className={`${price === p.value && "font-bold"}`}
-                  href={getFilterUrl({ p: p.value })}
-                >
-                  {p.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        {/* Rating Links */}
-        <div className="text-xl mb-2 mt-8">Ratings</div>
-        <div>
-          <ul className="space-y-1">
-            <li>
-              <Link
-                className={`${rating === "all" && "font-bold"}`}
-                href={getFilterUrl({ r: "all" })}
-              >
-                Any
-              </Link>
-            </li>
-            {ratings.map((r) => (
-              <li key={r}>
-                <Link
-                  className={`${rating === r.toString() && "font-bold"}`}
-                  href={getFilterUrl({ r: `${r}` })}
-                >
-                  {`${r} stars & up`}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      <div className="md:col-span-4 space-y-4">
-        <div className="flex-between flex-col md:flex-row my-4">
-          <div className="flex items-center">
-            {q !== "all" && q !== "" && "Query: " + q}
-            {category !== "all" && category !== "" && "Category: " + category}
-            {price !== "all" && " Price: " + price}
-            {rating !== "all" && " Rating: " + rating + " stars & up"}
-            &nbsp;
-            {(q !== "all" && q !== "") ||
-            (category !== "all" && category !== "") ||
-            rating !== "all" ||
-            price !== "all" ? (
-              <Button variant={"link"} asChild>
-                <Link href="/search">Clear</Link>
-              </Button>
-            ) : null}
-          </div>
+    <div className="grid md:grid-cols-5 gap-6">
+      {/* ================= FILTER SIDEBAR ================= */}
+      <Card className="h-fit rounded-2xl bg-card  md:w-40 lg:w-auto">
+        <CardContent className="p-5 space-y-6">
+          <h2 className="text-2xl font-bold">Filters</h2>
+
+          {/* Department */}
           <div>
-            Sort by{" "}
-            {sortOrders.map((s) => (
-              <Link
-                key={s}
-                className={`mx-2 ${sort == s && "font-bold"}`}
-                href={getFilterUrl({ s })}
-              >
-                {s}
-              </Link>
-            ))}
+            <p className="font-semibold mb-3">Department</p>
+            <div className="space-y-2">
+              {["all", ...categories.map((c) => c.category)].map((c) => {
+                const active =
+                  category === c || (c === "all" && category === "all");
+
+                return (
+                  <Link
+                    key={c}
+                    href={getFilterUrl({ c })}
+                    className="flex items-center gap-2 text-sm"
+                  >
+                    <Checkbox checked={active} />
+                    <span className={active ? "font-semibold" : ""}>
+                      {c === "all" ? "Any" : c}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          <Separator />
+
+          {/* Price */}
+          <div>
+            <p className="font-semibold mb-3">Price</p>
+            <div className="space-y-2">
+              {["all", ...prices.map((p) => p.value)].map((p) => {
+                const active = price === p || (p === "all" && price === "all");
+
+                return (
+                  <Link
+                    key={p}
+                    href={getFilterUrl({ p })}
+                    className="flex items-center gap-2 text-sm"
+                  >
+                    <Checkbox checked={active} />
+                    <span className={active ? "font-semibold" : ""}>
+                      {p === "all"
+                        ? "Any"
+                        : prices.find((x) => x.value === p)?.name}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          <Separator />
+
+          {/* Ratings */}
+          <div>
+            <p className="font-semibold mb-3">Ratings</p>
+            <div className="space-y-2">
+              {["all", ...ratings.map(String)].map((r) => {
+                const active =
+                  rating === r || (r === "all" && rating === "all");
+
+                return (
+                  <Link
+                    key={r}
+                    href={getFilterUrl({ r })}
+                    className="flex items-center gap-2 text-sm"
+                  >
+                    <Checkbox checked={active} />
+                    <span className={active ? "font-semibold" : ""}>
+                      {r === "all" ? (
+                        <Rating value={5} />
+                      ) : (
+                        <Rating value={Number(r)} />
+                      )}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* ================= MAIN CONTENT ================= */}
+      <div className="md:col-span-4 space-y-5">
+        {/* FILTER BAR */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          {/* Active filters */}
+          <div className="flex flex-wrap gap-2">
+            {category !== "all" && (
+              <Badge variant="secondary">Category: {category}</Badge>
+            )}
+            {price !== "all" && (
+              <Badge variant="secondary">Price: {price}</Badge>
+            )}
+            {rating !== "all" && (
+              <Badge variant="secondary">{rating}+ stars</Badge>
+            )}
+
+            {(category !== "all" || price !== "all" || rating !== "all") && (
+              <Button variant="link" asChild className="px-0 h-auto">
+                <Link href="/search">Clear all</Link>
+              </Button>
+            )}
+          </div>
+
+          {/* Sort */}
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-muted-foreground">Sort by:</span>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-40 justify-between">
+                  {sort.charAt(0).toUpperCase() + sort.slice(1)}
+                </Button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent align="end" className="w-40">
+                {sortOrders.map((s) => (
+                  <DropdownMenuItem key={s} asChild>
+                    <Link
+                      href={getFilterUrl({ s })}
+                      className={`w-full ${
+                        sort === s ? "font-semibold text-primary" : ""
+                      }`}
+                    >
+                      {s.charAt(0).toUpperCase() + s.slice(1)}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-4 justify-items-center">
-          {products.data.length === 0 && <div>No products found</div>}
+
+        {/* PRODUCTS */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 justify-items-center">
+          {products.data.length === 0 && (
+            <div className="text-muted-foreground">No products found</div>
+          )}
           {products.data.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
