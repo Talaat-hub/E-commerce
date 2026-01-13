@@ -1,39 +1,83 @@
 import React from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { ProductCardProps } from "./ProductCard.types";
 import ProductPrice from "../ProductPrice/ProductPrice";
 import Rating from "../Rating/Rating";
+import AddToCart from "../Cart/AddToCart";
+import { getMyCart } from "@/lib/actions/cart.actions";
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = async ({ product }: ProductCardProps) => {
+  const cart = await getMyCart();
+
+  const item = {
+    productId: product.id,
+    name: product.name,
+    slug: product.slug,
+    price: Number(product.price),
+    qty: 1,
+    image: product.images![0],
+  };
+
+  const inStock = product.stock > 0;
+
   return (
-    <Card className="w-full max-w-sm pt-0 overflow-hidden gap-5">
-      <CardHeader className="p-0 items-center">
-        <Link href={`/product/${product.slug}`}>
+    <Card className="group w-full max-w-sm rounded-2xl shadow-lg hover:shadow-xl transition">
+      {/* IMAGE */}
+      <Link href={`/product/${product.slug}`} className="block px-3 py-2">
+        <div className="relative aspect-4/3 overflow-hidden rounded-xl bg-white">
           <Image
             src={product.images[0]}
             alt={product.name}
-            height={300}
-            width={300}
-            priority={true}
-            className="w-[-webkit-fill-available]"
+            fill
+            priority
+            className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
           />
-        </Link>
-      </CardHeader>
-      <CardContent className="p-4 pt-0 grid gap-4">
-        <div className="text-xs">{product.brand}</div>
+        </div>
+      </Link>
+
+      {/* CONTENT */}
+      <CardContent className="p-4 pt-2 space-y-3">
+        {/* Brand */}
+        <p className="text-xs text-muted-foreground">{product.brand}</p>
+
+        {/* Name */}
         <Link href={`/product/${product.slug}`}>
-          <h2 className="text-sm font-medium">{product.name}</h2>
+          <h3 className="text-sm font-semibold leading-snug line-clamp-2 hover:underline mb-1">
+            {product.name}
+          </h3>
         </Link>
-        <div className="flex-between gap-4">
+
+        {/* Rating + Price */}
+        <div className="flex items-center justify-between">
           <Rating value={Number(product.rating)} />
-          {product.stock > 0 ? (
-            <ProductPrice value={Number(product.price)} className={``} />
+          {inStock ? (
+            <ProductPrice
+              value={Number(product.price)}
+              className="text-sm font-semibold"
+            />
           ) : (
-            <p className="text-destructive">Out Of Stock</p>
+            <span className="text-xs font-medium text-destructive">
+              Out of stock
+            </span>
           )}
         </div>
+
+        {/* CTA */}
+        {inStock ? (
+          <div className="text-center">
+            <AddToCart cart={cart} item={item} />
+          </div>
+        ) : (
+          <Button
+            disabled
+            className="w-full rounded-lg bg-zinc-700 text-zinc-400 cursor-not-allowed"
+          >
+            Out of Stock
+          </Button>
+        )}
       </CardContent>
     </Card>
   );
