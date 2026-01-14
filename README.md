@@ -1,10 +1,7 @@
-Absolutely — here’s the rewritten full **README.md** with your new requirements:
 
----
+# 🛒 **Kaufra - Modern Full-Stack E-Commerce Platform**
 
-# 🛍️ **E-Commerce Platform — Next.js 16**
-
-A full-stack, modern, and production-ready **E-Commerce Web Application** built using the latest **Next.js 16** framework with **React 19**, secure authentication, integrated payments, admin dashboard, and a highly customizable UI toolkit.
+Kaufra is a high-performance full-stack, modern, and production-ready **E-Commerce Web Application** built using the latest **Next.js 16** framework with **React 19**,It leverages a robust stack including Prisma, PostgreSQL, and Auth.js, secure authentication, integrated payments, admin dashboard, and a highly customizable UI toolkit.
 
 Designed with scalability, developer experience, and real-world e-commerce flows in mind.
 
