@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signUpDefaultValues } from "@/lib/constants";
 import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
@@ -34,8 +33,7 @@ const SignUpForm = () => {
               id="name"
               name="name"
               type="text"
-              autoComplete="name"
-              defaultValue={signUpDefaultValues.name}
+              defaultValue={data.values?.name ?? ""}
             />
           </div>
           <FieldError error={data.fieldErrors?.name} />
@@ -47,8 +45,7 @@ const SignUpForm = () => {
               id="email"
               name="email"
               type="text"
-              autoComplete="email"
-              defaultValue={signUpDefaultValues.email}
+              defaultValue={data.values?.email ?? ""}
             />
           </div>
           <FieldError error={data.fieldErrors?.email} />
@@ -61,7 +58,7 @@ const SignUpForm = () => {
               name="password"
               type="password"
               autoComplete="password"
-              defaultValue={signUpDefaultValues.password}
+              defaultValue={data.values?.password ?? ""}
             />
           </div>
           <FieldError error={data.fieldErrors?.password} />
@@ -74,7 +71,7 @@ const SignUpForm = () => {
               name="confirmPassword"
               type="password"
               autoComplete="confirmPassword"
-              defaultValue={signUpDefaultValues.confirnPassword}
+              defaultValue={data.values?.confirmPassword ?? ""}
             />
           </div>
           <FieldError error={data.fieldErrors?.confirmPassword} />
