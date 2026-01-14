@@ -4,6 +4,7 @@ import { getUserById } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
 import CheckoutSteps from "@/components/checkout-steps/CheckoutSteps";
 import PaymentMethodForm from "./PaymentMethodForm";
+import { headers } from "next/headers";
 // import PaymentMethodForm from "./payment-method-form";
 
 export const metadata: Metadata = {
@@ -14,7 +15,10 @@ const PaymentMethodPage = async () => {
   const session = await auth();
 
   if (!session?.user) {
-    redirect("/sign-in");
+    const headersList = headers();
+    const pathname = (await headersList).get("x-pathname") || "/payment-method";
+
+    redirect(`/sign-in?callbackUrl=${encodeURIComponent(pathname)}`);
   }
 
   const userId = session?.user?.id;
