@@ -5,6 +5,7 @@ import { ShippingAddress } from "@/types/shipping-adress";
 import OrderDetailsTable from "./OrderDetailsTable";
 import { auth } from "@/lib/auth/auth";
 import Stripe from "stripe";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Order Details",
@@ -22,7 +23,10 @@ const OrderDetailsPage = async (props: OrderDetailsPageProps) => {
   const session = await auth();
 
   if (!session?.user) {
-    redirect("/sign-in");
+    const headersList = headers();
+    const pathname = (await headersList).get("x-pathname") || id;
+
+    redirect(`/sign-in?callbackUrl=${encodeURIComponent(pathname)}`);
   }
 
   const order = await getOrderById(id);
