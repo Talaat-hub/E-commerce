@@ -73,10 +73,10 @@ Kaufra/
 
 ```
 
-**Public store pages** are inside `(root)` ✔
-**Auth pages** live in `(auth)` ✔
-**Admin section** has its dedicated layout, routes & navigation ✔
-**API routes** handle auth, uploads, & webhooks server-side ✔
+✔ **Public store pages are inside** `(root)`
+✔ **Auth pages live in** `(auth)`
+✔ **Admin section has its dedicated layout, routes & navigation**
+✔ **API routes handle auth, uploads, & webhooks server-side**
 
 ---
 
@@ -94,7 +94,7 @@ Kaufra/
 
 ### 🔐 **Authentication (NextAuth)**
 
-Using **NextAuth** with:
+You are using **NextAuth** with:
 
 ✔ **Credentials Provider** (Email + Password)
 ✔ **Encrypted passwords via bcrypt**
@@ -258,6 +258,17 @@ Supports migrations & seeding for development.
 
 ---
 
+# 🧪 **Testing**
+
+Uses **Jest** specifically for validating:
+
+- PayPal token generation
+- Payment verification flows
+
+Testing is intentionally minimal to avoid over-complexity.
+
+---
+
 # 🧰 **Developer Experience**
 
 ✔ TypeScript-first codebase
@@ -306,6 +317,10 @@ This project successfully demonstrates:
 # ⚠️ **Challenges & Insights**
 
 While building this platform, notable challenges included:
+
+🧩 **Dependency Compatibility**
+
+- React 19 & Next 16 adoption required using `--legacy-peer-deps` due to missing peer updates.
 
 🔐 **Credential Flow with NextAuth**
 
