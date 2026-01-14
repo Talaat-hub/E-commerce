@@ -73,10 +73,10 @@ Kaufra/
 
 ```
 
-✔ **Public store pages** are inside `(root)`
-✔ **Auth pages** live in `(auth)`
-✔ **Admin section** has its dedicated layout, routes & navigation
-✔ **API routes** handle auth, uploads, & webhooks server-side
+**Public store pages** are inside `(root)` ✔
+**Auth pages** live in `(auth)` ✔
+**Admin section** has its dedicated layout, routes & navigation ✔
+**API routes** handle auth, uploads, & webhooks server-side ✔
 
 ---
 
