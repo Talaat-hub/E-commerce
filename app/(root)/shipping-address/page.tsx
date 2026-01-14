@@ -6,6 +6,7 @@ import { ShippingAddress } from "@/types/shipping-adress";
 import { getUserById } from "@/lib/actions/user.actions";
 import ShippingAddressForm from "./ShippingAddressForm";
 import CheckoutSteps from "@/components/checkout-steps/CheckoutSteps";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Shipping Address",
@@ -15,7 +16,11 @@ const ShippingAddressPage = async () => {
   const session = await auth();
 
   if (!session?.user) {
-    redirect("/sign-in");
+    const headersList = headers();
+    const pathname =
+      (await headersList).get("x-pathname") || "/shipping-address";
+
+    redirect(`/sign-in?callbackUrl=${encodeURIComponent(pathname)}`);
   }
 
   const cart = await getMyCart();
