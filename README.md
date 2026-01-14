@@ -96,10 +96,10 @@ Kaufra/
 
 You are using **NextAuth** with:
 
-✔ **Credentials Provider** (Email + Password)
-✔ **Encrypted passwords via bcrypt**
-✔ **Sessions handled using Cookies + JWT**
-✔ **Role-based Authorization (Admin/User)**
+#### ✔ **Credentials Provider** (Email + Password)
+#### ✔ **Encrypted passwords via bcrypt**
+#### ✔ **Sessions handled using Cookies + JWT**
+#### ✔ **Role-based Authorization (Admin/User)**
 
 Additional future-ready providers supported in codebase:
 
@@ -117,11 +117,11 @@ Additional future-ready providers supported in codebase:
 
 Protected via roles & middleware with capabilities:
 
-✔ **Manage Products (CRUD)**
-✔ **Manage Orders & Status**
-✔ **Manage Users & Roles**
-✔ **Admin Analytics + Revenue Charts** (Recharts)
-✔ **Upload product images via UploadThing**
+#### ✔ **Manage Orders & Status**
+#### ✔ **Manage Products (CRUD)**
+#### ✔ **Manage Users & Roles**
+#### ✔ **Admin Analytics + Revenue Charts** (Recharts)
+#### ✔ **Upload product images via UploadThing**
 
 ### 💳 **Payments**
 
@@ -150,10 +150,10 @@ Using **React Email + Resend** for transactional emails:
 
 Built with modern UI tooling:
 
-✔ **ShadCN UI** (Composable components)
-✔ **Tailwind CSS**
-✔ **Lucide Icons**
-✔ **Embla Carousel** (Featured products slider)
+#### ✔ **ShadCN UI** (Composable components)
+#### ✔ **Tailwind CSS**
+#### ✔ **Lucide Icons**
+#### ✔ **Embla Carousel** (Featured products slider)
 
 ---
 
@@ -271,12 +271,12 @@ Testing is intentionally minimal to avoid over-complexity.
 
 # 🧰 **Developer Experience**
 
-✔ TypeScript-first codebase
-✔ Prisma type-safety to DB layer
-✔ Zod validation on inputs
-✔ ESLint formatting & linting
-✔ RHF for form management
-✔ Strict mode compliant
+#### ✔ TypeScript-first codebase
+#### ✔ Prisma type-safety to DB layer
+#### ✔ Zod validation on inputs
+#### ✔ ESLint formatting & linting
+#### ✔ RHF for form management
+#### ✔ Strict mode compliant
 
 ---
 
@@ -302,15 +302,15 @@ UPLOADTHING_SECRET=
 
 This project successfully demonstrates:
 
-✔ Full-stack ecommerce architecture
-✔ Real authentication & authorization
-✔ Modern SSR/ISR patterns via Next.js 16
-✔ Admin dashboard with real CRUD flows
-✔ Stripe + PayPal payment integration
-✔ Dark/Light theme capabilities
-✔ Transactional email system
-✔ Cloud Postgres setup via Vercel/Neon
-✔ Type-safe development environment
+#### ✔ Full-stack ecommerce architecture
+#### ✔ Real authentication & authorization
+#### ✔ Modern SSR/ISR patterns via Next.js 16
+#### ✔ Admin dashboard with real CRUD flows
+#### ✔ Stripe + PayPal payment integration
+#### ✔ Dark/Light theme capabilities
+#### ✔ Transactional email system
+#### ✔ Cloud Postgres setup via Vercel/Neon
+#### ✔ Type-safe development environment
 
 ---
 
