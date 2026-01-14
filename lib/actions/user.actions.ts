@@ -28,7 +28,12 @@ export async function signInWithCredentials(
       password: formData.get("password"),
     });
 
-    await signIn("credentials", user);
+    const callbackUrl = (formData.get("callbackUrl") as string) || "/";
+
+    await signIn("credentials", {
+      ...user,
+      redirectTo: callbackUrl,
+    });
 
     return { success: true, message: "Signed in successfully" };
   } catch (error) {
@@ -39,14 +44,12 @@ export async function signInWithCredentials(
   }
 }
 
-// Sign user out
+// ================= SIGN OUT =================
 export async function signOutUser() {
-  const currentCart = await getMyCart();
+  const cart = await getMyCart();
 
-  if (currentCart?.id) {
-    await prisma.cart.delete({
-      where: { id: currentCart.id },
-    });
+  if (cart?.id) {
+    await prisma.cart.delete({ where: { id: cart.id } });
   }
 
   await signOut();
@@ -65,6 +68,8 @@ export async function signUpUser(
       confirmPassword: formData.get("confirmPassword"),
     });
 
+    const callbackUrl = (formData.get("callbackUrl") as string) || "/";
+
     const plainPassword = user.password;
 
     user.password = hashSync(user.password, 10);
@@ -80,6 +85,7 @@ export async function signUpUser(
     await signIn("credentials", {
       email: user.email,
       password: plainPassword,
+      redirectTo: callbackUrl,
     });
 
     return { success: true, message: "User registered successfully" };
