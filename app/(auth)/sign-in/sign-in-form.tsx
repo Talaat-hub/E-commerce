@@ -55,7 +55,7 @@ const SignInForm = () => {
         <div className="text-sm text-center text-muted-foreground">
           Don&apos;t have an account?{" "}
           <Link
-            href="/sign-up"
+            href={`/sign-up?callbackUrl=${encodeURIComponent(callbackUrl)}`}
             target="_self"
             className="link hover:text-blue-400 duration-300"
           >
