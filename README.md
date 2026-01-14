@@ -239,7 +239,7 @@ If unauthorized, users are:
 
 - PayPal React SDK
 - Stripe Checkout & Webhooks
-- Jest Tests for payments
+- cash on delivery COD
 
 ### **Storage**
 
@@ -265,17 +265,6 @@ Managed via **Prisma**, featuring models such as:
 - `Address`
 
 Supports migrations & seeding for development.
-
----
-
-# 🧪 **Testing**
-
-Uses **Jest** specifically for validating:
-
-- PayPal token generation
-- Payment verification flows
-
-Testing is intentionally minimal to avoid over-complexity.
 
 ---
 
