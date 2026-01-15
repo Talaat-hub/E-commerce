@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { getOrderById } from "@/lib/actions/order.actions";
+import { auth } from "@/lib/auth/auth";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import Stripe from "stripe";
@@ -12,6 +13,11 @@ const SuccessPage = async (props: {
 }) => {
   const { id } = await props.params;
   const { payment_intent: paymentIntentId } = await props.searchParams;
+  const session = await auth();
+
+  if (!session?.user) {
+    redirect("/");
+  }
 
   // Fetch order
   const order = await getOrderById(id);
