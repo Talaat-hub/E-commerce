@@ -1,4 +1,3 @@
-
 # 🛒 **Kaufra - Modern Full-Stack E-Commerce Platform**
 
 Kaufra is a high-performance full-stack, modern, and production-ready **E-Commerce Web Application** built using the latest **Next.js 16** framework with **React 19**,It leverages a robust stack including Prisma, PostgreSQL, and Auth.js, secure authentication, integrated payments, admin dashboard, and a highly customizable UI toolkit.
@@ -326,10 +325,6 @@ This project successfully demonstrates:
 # ⚠️ **Challenges & Insights**
 
 While building this platform, notable challenges included:
-
-🧩 **Dependency Compatibility**
-
-- React 19 & Next 16 adoption required using `--legacy-peer-deps` due to missing peer updates.
 
 🔐 **Credential Flow with NextAuth**
 
